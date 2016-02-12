@@ -1,0 +1,19 @@
+{
+  "name": "sonos_watcher",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bluebird": "^3.2.2",
+    "continuation-local-storage": "^3.1.6",
+    "denon-avr": "^0.0.4",
+    "sonos-discovery": "git+https://github.com/jishi/node-sonos-discovery.git"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
