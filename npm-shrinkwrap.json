@@ -134,7 +134,13 @@
     "denon-avr": {
       "version": "0.0.4",
       "from": "denon-avr@*",
-      "resolved": "https://registry.npmjs.org/denon-avr/-/denon-avr-0.0.4.tgz"
+      "resolved": "https://registry.npmjs.org/denon-avr/-/denon-avr-0.0.4.tgz",
+      "dependencies": {
+        "telnet-client": {
+          "version": "0.1.0",
+          "from": "https://github.com/arseneyr/node-telnet-client.git"
+        }
+      }
     },
     "easysax": {
       "version": "0.1.14",
@@ -153,7 +159,8 @@
       "dependencies": {
         "shimmer": {
           "version": "1.0.0",
-          "from": "shimmer@1.0.0"
+          "from": "shimmer@1.0.0",
+          "resolved": "https://registry.npmjs.org/shimmer/-/shimmer-1.0.0.tgz"
         }
       }
     },
@@ -448,11 +455,6 @@
       "from": "supports-color@>=2.0.0 <3.0.0",
       "resolved": "https://registry.npmjs.org/supports-color/-/supports-color-2.0.0.tgz"
     },
-    "telnet-client": {
-      "version": "0.1.0",
-      "from": "git+https://github.com/arseneyr/node-telnet-client.git",
-      "resolved": "git+https://github.com/arseneyr/node-telnet-client.git#086a30f835ea1b9959a69efc30e9f475ac9503dd"
-    },
     "tough-cookie": {
       "version": "2.2.1",
       "from": "tough-cookie@>=2.2.0 <2.3.0",
@@ -485,7 +487,8 @@
       "dependencies": {
         "async": {
           "version": "0.2.10",
-          "from": "async@>=0.2.0 <0.3.0"
+          "from": "async@0.2.10",
+          "resolved": "https://registry.npmjs.org/async/-/async-0.2.10.tgz"
         }
       }
     },
