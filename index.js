@@ -69,7 +69,7 @@ function turn_off_avr() {
                 }
             });
         });
-    }, 2000);
+    }, 60000);
 }
 
 var sonos = new sonos_discovery();
