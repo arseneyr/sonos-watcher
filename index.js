@@ -26,11 +26,13 @@ function turn_on_avr() {
     }
     
     Promise.using(connect_to_avr(), (avr) => {
-        return avr.getPowerStateAsync()
-            .then((power_state) => {                
-                console.log("AVR STATE: " + power_state);
-                if (power_state === 'STANDBY') {
-                    console.log("TURNING AVR ON!");
+        return Promise.mapSeries(
+                [avr.getPowerStateAsync, avr.getSourceAsync],
+                (f) => f.call(avr)
+            )
+            .spread(function(power_state, source) {
+                console.log("AVR STATE: " + power_state + " " + source);
+                if (power_state !== 'ON' || source !== 'BD') { 
                     return avr.sendAsync('SIBD', 'SI');
                 }
             });
@@ -67,36 +69,12 @@ function turn_off_avr() {
                 }
             });
         });
-    }, 60000);
+    }, 2000);
 }
 
 var sonos = new sonos_discovery();
 
-
 var turn_off_timer = null;
-
-function is_sonos_playing() {
-    var p = sonos.getPlayer('Living Room');
-    if (p) {
-        var state = p.getState();
-        return (state.zoneState === 'PLAYING' && state.playerState === 'PLAYING');
-    }
-    
-    return false;    
-}
-
-function on_sonos_state_change() {
-    if (is_sonos_playing() && !previous_state) {
-        console.log("SONOS STARTED PLAYING!");
-        previous_state = true;
-        turn_on_avr();
-    } else if (!is_sonos_playing() && previous_state) {
-        console.log("SONOS STOPPED PLAYING!");
-        previous_state = false;
-        turn_off_avr();
-    }
-}
-
 var current_coordinator = null;
 var previous_state = null;
 
