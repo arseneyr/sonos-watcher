@@ -6,7 +6,7 @@
   "dependencies": {
     "bluebird": "^3.2.2",
     "continuation-local-storage": "^3.1.6",
-    "denon-avr": "^0.0.4",
+    "denon-avr": "git+https://github.com/phillipsnick/denon-avr.git",
     "sonos-discovery": "git+https://github.com/jishi/node-sonos-discovery.git"
   },
   "devDependencies": {},

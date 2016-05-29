@@ -85,8 +85,6 @@ function is_sonos_playing() {
     return false;    
 }
 
-var previous_state = is_sonos_playing();
-
 function on_sonos_state_change() {
     if (is_sonos_playing() && !previous_state) {
         console.log("SONOS STARTED PLAYING!");
@@ -99,4 +97,36 @@ function on_sonos_state_change() {
     }
 }
 
-sonos.on('transport-state', on_sonos_state_change);
+var current_coordinator = null;
+var previous_state = null;
+
+function on_state_change(state) {
+    if (previous_state && state.playbackState !== 'PLAYING') {
+        previous_state = false;
+        console.log("STOPPING");
+        turn_off_avr();
+    } else if (!previous_state && state.playbackState === 'PLAYING') {
+        previous_state = true;
+        console.log("PLAYING");
+        turn_on_avr();
+    }
+}
+
+function on_topology_change() {
+    if (current_coordinator) {
+        current_coordinator.removeListener('transport-state', on_state_change);
+    }
+    
+    var p = sonos.getPlayer('Living Room');
+    if (p) {
+        current_coordinator = p.coordinator;   
+        if (previous_state == null) {
+            previous_state = (current_coordinator.state.playbackState === 'PLAYING');
+        } 
+        
+        current_coordinator.on('transport-state', on_state_change);
+        on_state_change(current_coordinator.state);
+    }
+}
+
+sonos.on('topology-change', on_topology_change);
